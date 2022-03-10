@@ -7,6 +7,7 @@ This app was built using many modern iOS development techniques and will show yo
 - Auto Layout
 - Vector Assets
 - Dark Mode
+- MVC Architecture
 - Protocol-Delegate
 - Parsing JSON
 - HTTP/URLSession
