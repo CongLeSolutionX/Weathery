@@ -25,7 +25,6 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup() // Step 2. Register observers
         style()
         layout()
     }
@@ -33,18 +32,7 @@ class WeatherViewController: UIViewController {
 // MARK: -
 extension WeatherViewController {
     func setup() {
-        // Register for a notification
-        /// When register a notification, we need to specify:
-        /// - `observer` who is observing this notification. In this case it is us so we can just pass in `self`
-        /// - `selector` the function that is going to execute when this notification is received.
-        /// - `name` the name of this event. This is of type `NSNotification.Name?`
-        /// - `object` the object that sends the notification to us. We don’t really care who sends us the notification. So we can just put `nil` here.
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(receiveWeather),
-            name: .didReceiveWeather,
-            object: nil
-        )
+     
     }
     
     func style() {
@@ -147,15 +135,17 @@ extension WeatherViewController {
 extension WeatherViewController {
     @objc
     func searchPressed(_ sender: UIButton) {
-        let service = WeatherNotificationService()
-        service.fetchWeather(cityName: "New York")
+        var service = WeatherClosureService()
+        let  handler: (WeatherModel) -> Void = handleWeather(weatherModel:)
+        service.receiveWeatherHandler = handler
+        service.fetchWeather(cityName: "Stockholm")
     }
-    // Step 4: Get notified
-    // Execute this function when we receive the event
-    @objc func receiveWeather(_ notification: Notification) {
-        guard let data = notification.userInfo as? [String: WeatherModel] else { return }
-        guard let weatherModel = data["currentWeather"] else { return }
-        
+    
+    func handleWeather(weatherModel: WeatherModel) {
+        updateUI(with: weatherModel)
+    }
+    
+    private func updateUI(with weatherModel: WeatherModel) {
         temperatureLabel.attributedText = makeTemperatureText(with: weatherModel.temperatureString)
         conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
         cityLabel.text = weatherModel.cityName
