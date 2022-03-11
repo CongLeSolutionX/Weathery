@@ -25,12 +25,28 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup() // Step 2. Register observers
         style()
         layout()
     }
 }
-
+// MARK: -
 extension WeatherViewController {
+    func setup() {
+        // Register for a notification
+        /// When register a notification, we need to specify:
+        /// - `observer` who is observing this notification. In this case it is us so we can just pass in `self`
+        /// - `selector` the function that is going to execute when this notification is received.
+        /// - `name` the name of this event. This is of type `NSNotification.Name?`
+        /// - `object` the object that sends the notification to us. We don’t really care who sends us the notification. So we can just put `nil` here.
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(receiveWeather),
+            name: .didReceiveWeather,
+            object: nil
+        )
+    }
+    
     func style() {
         rootStackView.translatesAutoresizingMaskIntoConstraints = false
         rootStackView.axis = .vertical
@@ -54,6 +70,7 @@ extension WeatherViewController {
         
         searchButton.translatesAutoresizingMaskIntoConstraints = false
         searchButton.setBackgroundImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        searchButton.addTarget(self, action: #selector(searchPressed(_:)), for: .primaryActionTriggered)
         searchButton.tintColor = .label
         
         // weather
@@ -110,7 +127,7 @@ extension WeatherViewController {
             backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+   
     private func makeTemperatureText(with temperature: String) -> NSAttributedString {
         
         var boldTextAttributes = [NSAttributedString.Key: AnyObject]()
@@ -124,5 +141,23 @@ extension WeatherViewController {
         text.append(NSAttributedString(string: "°C", attributes: plainTextAttributes))
 
         return text
+    }
+}
+// MARK: - Helper Methods
+extension WeatherViewController {
+    @objc
+    func searchPressed(_ sender: UIButton) {
+        let service = WeatherNotificationService()
+        service.fetchWeather(cityName: "New York")
+    }
+    // Step 4: Get notified
+    // Execute this function when we receive the event
+    @objc func receiveWeather(_ notification: Notification) {
+        guard let data = notification.userInfo as? [String: WeatherModel] else { return }
+        guard let weatherModel = data["currentWeather"] else { return }
+        
+        temperatureLabel.attributedText = makeTemperatureText(with: weatherModel.temperatureString)
+        conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
+        cityLabel.text = weatherModel.cityName
     }
 }

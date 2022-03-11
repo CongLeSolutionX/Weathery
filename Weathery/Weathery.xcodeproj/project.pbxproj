@@ -12,6 +12,7 @@
 		4C4C3C0727D93092007E205B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C4C3C0627D93092007E205B /* Assets.xcassets */; };
 		4C4C3C0A27D93092007E205B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C4C3C0827D93092007E205B /* LaunchScreen.storyboard */; };
 		4C4C3C1627DA0A01007E205B /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C3C1527DA0A01007E205B /* WeatherModel.swift */; };
+		4C4C3C1827DAAC02007E205B /* WeatherNotificiationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C3C1727DAAC02007E205B /* WeatherNotificiationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		4C4C3C0927D93092007E205B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C4C3C0B27D93092007E205B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C4C3C1527DA0A01007E205B /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		4C4C3C1727DAAC02007E205B /* WeatherNotificiationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNotificiationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,11 +56,11 @@
 		4C4C3BFC27D93090007E205B /* Weathery */ = {
 			isa = PBXGroup;
 			children = (
+				4C4C3BFD27D93090007E205B /* AppDelegate.swift */,
 				4C4C3C1427DA09CE007E205B /* Files */,
 				4C4C3C1327DA09AB007E205B /* Controller */,
 				4C4C3C1227DA09A0007E205B /* View */,
 				4C4C3C1127DA0990007E205B /* Model */,
-				4C4C3BFD27D93090007E205B /* AppDelegate.swift */,
 			);
 			path = Weathery;
 			sourceTree = "<group>";
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				4C4C3C1527DA0A01007E205B /* WeatherModel.swift */,
+				4C4C3C1727DAAC02007E205B /* WeatherNotificiationService.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				4C4C3C0227D93090007E205B /* WeatherViewController.swift in Sources */,
 				4C4C3C1627DA0A01007E205B /* WeatherModel.swift in Sources */,
 				4C4C3BFE27D93090007E205B /* AppDelegate.swift in Sources */,
+				4C4C3C1827DAAC02007E205B /* WeatherNotificiationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +248,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -298,6 +303,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -311,7 +317,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 99WD9D6Y46;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Weathery/Info.plist;
+				INFOPLIST_FILE = Weathery/Files/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -339,7 +345,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 99WD9D6Y46;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Weathery/Info.plist;
+				INFOPLIST_FILE = Weathery/Files/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
