@@ -9,9 +9,10 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController {
-    let rootStackView = UIStackView()
     let locationManager = CLLocationManager()
+    var weatherService = WeatherService()
     
+    let rootStackView = UIStackView()
     // search
     let searchStackView = UIStackView()
     let locationButton = UIButton()
@@ -23,6 +24,7 @@ class WeatherViewController: UIViewController {
     let temperatureLabel = UILabel()
     let cityLabel = UILabel()
     
+    // bakcground
     let backgroundView = UIImageView()
     
     override func viewDidLoad() {
@@ -40,6 +42,8 @@ extension WeatherViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        weatherService.delegate = self
     }
     
     func style() {
@@ -170,7 +174,7 @@ extension WeatherViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let city = searchTextField.text {
-          print(city)
+            weatherService.fetchWeather(cityName: city)
         }
         
         searchTextField.text = ""
@@ -187,12 +191,17 @@ extension WeatherViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let long = location.coordinate.longitude
-            print("lat: \(lat) long:  \(long)")
-            // weatherService.fetchWeather(latitude: lat, longtitude: long)
+            weatherService.fetchWeather(latitude: lat, longtitude: long)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+}
+//  MARK: - WeatherServiceDelegate
+extension WeatherViewController: WeatherServiceDelegate {
+    func didFetchWeather(_ weatherService: WeatherService, _ weather: WeatherModel) {
+        updateUI(with: weather)
     }
 }

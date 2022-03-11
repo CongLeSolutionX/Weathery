@@ -12,6 +12,7 @@
 		4C4C3C0727D93092007E205B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C4C3C0627D93092007E205B /* Assets.xcassets */; };
 		4C4C3C0A27D93092007E205B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C4C3C0827D93092007E205B /* LaunchScreen.storyboard */; };
 		4C4C3C1627DA0A01007E205B /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C3C1527DA0A01007E205B /* WeatherModel.swift */; };
+		4C4C3C1C27DC0F82007E205B /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C3C1B27DC0F82007E205B /* WeatherService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		4C4C3C0927D93092007E205B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C4C3C0B27D93092007E205B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C4C3C1527DA0A01007E205B /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		4C4C3C1B27DC0F82007E205B /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				4C4C3C1527DA0A01007E205B /* WeatherModel.swift */,
+				4C4C3C1B27DC0F82007E205B /* WeatherService.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C4C3C1C27DC0F82007E205B /* WeatherService.swift in Sources */,
 				4C4C3C0227D93090007E205B /* WeatherViewController.swift in Sources */,
 				4C4C3C1627DA0A01007E205B /* WeatherModel.swift in Sources */,
 				4C4C3BFE27D93090007E205B /* AppDelegate.swift in Sources */,
