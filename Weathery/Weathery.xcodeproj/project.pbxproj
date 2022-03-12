@@ -13,6 +13,7 @@
 		4C4C3C0A27D93092007E205B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C4C3C0827D93092007E205B /* LaunchScreen.storyboard */; };
 		4C4C3C1627DA0A01007E205B /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C3C1527DA0A01007E205B /* WeatherModel.swift */; };
 		4C4C3C1C27DC0F82007E205B /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C3C1B27DC0F82007E205B /* WeatherService.swift */; };
+		4C4C3C1E27DC1D13007E205B /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C3C1D27DC1D13007E205B /* WeatherData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		4C4C3C0B27D93092007E205B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C4C3C1527DA0A01007E205B /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		4C4C3C1B27DC0F82007E205B /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		4C4C3C1D27DC1D13007E205B /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				4C4C3C1527DA0A01007E205B /* WeatherModel.swift */,
+				4C4C3C1D27DC1D13007E205B /* WeatherData.swift */,
 				4C4C3C1B27DC0F82007E205B /* WeatherService.swift */,
 			);
 			name = Model;
@@ -170,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C4C3C1C27DC0F82007E205B /* WeatherService.swift in Sources */,
+				4C4C3C1E27DC1D13007E205B /* WeatherData.swift in Sources */,
 				4C4C3C0227D93090007E205B /* WeatherViewController.swift in Sources */,
 				4C4C3C1627DA0A01007E205B /* WeatherModel.swift in Sources */,
 				4C4C3BFE27D93090007E205B /* AppDelegate.swift in Sources */,
