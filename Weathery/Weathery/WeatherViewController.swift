@@ -127,19 +127,19 @@ extension WeatherViewController {
             backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-   
+    
     private func makeTemperatureText(with temperature: String) -> NSAttributedString {
         
         var boldTextAttributes = [NSAttributedString.Key: AnyObject]()
         boldTextAttributes[.foregroundColor] = UIColor.label
         boldTextAttributes[.font] = UIFont.boldSystemFont(ofSize: 100)
-
+        
         var plainTextAttributes = [NSAttributedString.Key: AnyObject]()
         plainTextAttributes[.font] = UIFont.systemFont(ofSize: 80)
-
+        
         let text = NSMutableAttributedString(string: temperature, attributes: boldTextAttributes)
         text.append(NSAttributedString(string: "°C", attributes: plainTextAttributes))
-
+        
         return text
     }
 }
@@ -201,6 +201,30 @@ extension WeatherViewController: CLLocationManagerDelegate {
 }
 //  MARK: - WeatherServiceDelegate
 extension WeatherViewController: WeatherServiceDelegate {
+    func didFailWithError(_ weatherService: WeatherService, _ error: ServiceError) {
+        let message: String
+        switch error {
+        case .network(statusCode: let statusCode):
+            message = "Network error with status code: \(statusCode)."
+        case .parsing:
+            message = "JSON weather data could not be parsed."
+        case .general(reason: let reason):
+            message = reason
+        }
+        showErrorAlert(with: message)
+    }
+    
+    func showErrorAlert(with message: String) {
+        let alert = UIAlertController(title: "Error fetching weather",
+                                      message: message,
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alert.addAction(action)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func didFetchWeather(_ weatherService: WeatherService, _ weather: WeatherModel) {
         updateUI(with: weather)
     }

@@ -8,8 +8,15 @@
 import Foundation
 import CoreLocation
 
+enum ServiceError: Error {
+    case network(statusCode: Int)
+    case parsing
+    case general(reason: String)
+}
+
 protocol WeatherServiceDelegate: AnyObject {
     func didFetchWeather(_ weatherService: WeatherService, _  weather: WeatherModel)
+    func didFailWithError(_ weatherService :WeatherService, _ error: ServiceError)
 }
 
 struct WeatherService {
@@ -18,7 +25,11 @@ struct WeatherService {
     let weatherURL = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=aa738fd3d8027f7059994e8bdca7ef3c&units=metric")!
     
     func fetchWeather(cityName: String) {
-        let urlString = "\(String(describing: weatherURL))&q=\(cityName)"
+        guard let urlEncodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            assertionFailure("Could not encode city named: \(cityName)") // Debug only
+            return
+        }
+        let urlString = "\(String(describing: weatherURL))&q=\(urlEncodedCityName)"
         performRequest(with: urlString)
     }
     
@@ -30,19 +41,40 @@ struct WeatherService {
     func performRequest(with urlString: String){
         let url = URL(string: urlString)!
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let safeData = data {
-                if let weather = self.parseJSON(safeData) {
-                    DispatchQueue.main.async {
-                        self.delegate?.didFetchWeather(self, weather)
-                    }
+            guard error == nil else {
+                let generalError = ServiceError.general(reason: "Check network availability.")
+                DispatchQueue.main.async {
+                    self.delegate?.didFailWithError(self, generalError)
                 }
+                return
+            }
+            
+            guard let safeData = data,
+                  let httpResponse = response as? HTTPURLResponse
+            else { return }
+            
+            guard (200...299).contains(httpResponse.statusCode) else {
+                print(httpResponse.statusCode)
+                DispatchQueue.main.async {
+                    self.delegate?.didFailWithError(self, ServiceError.network(statusCode: httpResponse.statusCode))
+                }
+                return
+            }
+            
+            guard let weather = self.parseJSON(safeData) else { return }
+            
+            DispatchQueue.main.async {
+                self.delegate?.didFetchWeather(self, weather)
             }
         }
         task.resume()
     }
     
-    func parseJSON(_ weatherData: Data) -> WeatherModel? {
+    private func parseJSON(_ weatherData: Data) -> WeatherModel? {
         guard let decodedData = try? JSONDecoder().decode(WeatherData.self, from: weatherData) else {
+            DispatchQueue.main.async {
+                self.delegate?.didFailWithError(self, ServiceError.parsing)
+            }
             return nil
         }
         
