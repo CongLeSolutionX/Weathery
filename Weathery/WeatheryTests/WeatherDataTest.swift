@@ -55,4 +55,22 @@ class WeatherDataTest: XCTestCase {
      
         XCTAssertEqual("", weatherData.name)
     }
+    func testCanParseWeatherViaLargeJSONFile() throws {
+        // Load  the json file from the disk
+        guard let pathString = Bundle(for: type(of: self)).path(forResource: "weather", ofType: "json") else {
+            fatalError("Json file not found")
+        }
+        print("\n\n\(pathString)\n\n")
+        
+        // Read the content of the  json file
+        guard let json = try? String(contentsOfFile: pathString, encoding: .utf8) else {
+            fatalError("Unable to  convert json  file to String")
+        }
+        
+        let  jsonData = json.data(using: .utf8)!
+        let weatherData  = try! JSONDecoder().decode(WeatherData.self, from: jsonData)
+        
+        XCTAssertEqual(25.65, weatherData.main.temp)
+        XCTAssertEqual("Paris", weatherData.name)
+    }
 }
