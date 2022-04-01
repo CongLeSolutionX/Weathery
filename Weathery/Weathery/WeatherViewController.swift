@@ -10,7 +10,7 @@ import CoreLocation
 
 class WeatherViewController: UIViewController {
     let locationManager = CLLocationManager()
-    var weatherService = WeatherService()
+    var weatherService: WeatherServiceProtocol = WeatherService() // Property dependency injection
     
     let rootStackView = UIStackView()
     // search
@@ -26,6 +26,8 @@ class WeatherViewController: UIViewController {
     
     // bakcground
     let backgroundView = UIImageView()
+    
+    var errorMessage: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -201,16 +203,17 @@ extension WeatherViewController: CLLocationManagerDelegate {
 }
 //  MARK: - WeatherServiceDelegate
 extension WeatherViewController: WeatherServiceDelegate {
-    func didFailWithError(_ weatherService: WeatherService, _ error: ServiceError) {
-        let message: String
+    func didFailWithError(_ weatherService: WeatherServiceProtocol, _ error: ServiceError) {
         switch error {
         case .network(statusCode: let statusCode):
-            message = "Network error with status code: \(statusCode)."
+            errorMessage = "Network error with status code: \(statusCode)"
         case .parsing:
-            message = "JSON weather data could not be parsed."
+            errorMessage = "JSON weather data could not be parsed."
         case .general(reason: let reason):
-            message = reason
+            errorMessage = reason
         }
+        
+        guard let message = errorMessage else { return }
         showErrorAlert(with: message)
     }
     
@@ -225,7 +228,7 @@ extension WeatherViewController: WeatherServiceDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func didFetchWeather(_ weatherService: WeatherService, _ weather: WeatherModel) {
+    func didFetchWeather(_ weatherService: WeatherServiceProtocol, _ weather: WeatherModel) {
         updateUI(with: weather)
     }
 }

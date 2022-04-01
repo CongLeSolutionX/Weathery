@@ -14,12 +14,18 @@ enum ServiceError: Error {
     case general(reason: String)
 }
 
-protocol WeatherServiceDelegate: AnyObject {
-    func didFetchWeather(_ weatherService: WeatherService, _  weather: WeatherModel)
-    func didFailWithError(_ weatherService :WeatherService, _ error: ServiceError)
+protocol WeatherServiceProtocol {
+    func fetchWeather(cityName: String)
+    func fetchWeather(latitude: CLLocationDegrees, longtitude: CLLocationDegrees)
+    var delegate: WeatherServiceDelegate? { get set }
 }
 
-struct WeatherService {
+protocol WeatherServiceDelegate: AnyObject {
+    func didFetchWeather(_ weatherService: WeatherServiceProtocol, _  weather: WeatherModel)
+    func didFailWithError(_ weatherService :WeatherServiceProtocol, _ error: ServiceError)
+}
+
+struct WeatherService: WeatherServiceProtocol {
     weak var delegate: WeatherServiceDelegate?
     
     let weatherURL = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=aa738fd3d8027f7059994e8bdca7ef3c&units=metric")!
